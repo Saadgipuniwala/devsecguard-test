@@ -2,6 +2,7 @@ import hmac
 import hashlib
 import os
 from fastapi import FastAPI, Request, HTTPException, Header
+from fastapi.responses import HTMLResponse
 from dotenv import load_dotenv
 from github_client import fetch_pr_diff
 from scanner import run_static_analysis
@@ -22,6 +23,30 @@ def verify_signature(payload_body: bytes, signature_header: str) -> bool:
     ).hexdigest()
     received_hash = signature_header.split("sha256=")[1]
     return hmac.compare_digest(expected_hash, received_hash)
+
+
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    return """
+    <html>
+        <head>
+            <title>DevSecGuard AI Dashboard</title>
+            <style>
+                body { font-family: Arial, sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; text-align: center; }
+                .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; display: inline-block; }
+                .status { color: #238636; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <h1>🛡️ DevSecGuard AI Agent</h1>
+                <p>Status: <span class="status">● ACTIVE & LISTENING</span></p>
+                <p>Webhook Endpoint: <code>/webhook</code></p>
+                <p>Engine Model: <code>gemini-3.8-flash</code></p>
+            </div>
+        </body>
+    </html>
+    """
 
 
 @app.post("/webhook")
@@ -73,5 +98,4 @@ async def handle_github_webhook(
 
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=8000)
