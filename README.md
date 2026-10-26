@@ -26,7 +26,6 @@
 - **Data Validation**: Pydantic v2
 - **Resilience**: Tenacity (Exponential Backoff)
 - **Integrations**: GitHub REST API & Webhooks, ngrok (Local Tunneling)
-- 
 ## System Architecture
 
 ```mermaid
@@ -36,7 +35,7 @@ flowchart TD
     C -->|Static Findings & Diff| D[Gemini LLM Engine <br> gemini-3.8-flash]
     D --> E{Pydantic Validation <br> Structured Output}
     E -->|JSON Payload| F[GitHub Review <br> Inline Comments]
-
+```
 ## Project Structure
 
 ```text
