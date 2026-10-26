@@ -38,9 +38,11 @@ def post_pr_review(
         )
 
     # Map AI verdict to GitHub API review event
+   # Map AI verdict to GitHub API review event
+    # Force all events to "COMMENT" to avoid 422 errors on personal PRs
     event_map = {
-        "APPROVE": "APPROVE",
-        "REQUEST_CHANGES": "REQUEST_CHANGES",
+        "APPROVE": "COMMENT",
+        "REQUEST_CHANGES": "COMMENT",
         "COMMENT": "COMMENT",
     }
     event_type = event_map.get(review.verdict.upper(), "COMMENT")
