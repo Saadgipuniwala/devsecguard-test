@@ -1,3 +1,7 @@
+![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)
+![Gemini AI](https://img.shields.io/badge/AI-gemini--3.8--flash-orange.svg)
+![License](https://img.shields.io/badge/license-MIT-purple.svg)
 # DevSecGuard AI 🛡️
 
 **DevSecGuard AI** is an automated Application Security (AppSec) agent designed to analyze GitHub Pull Requests for security vulnerabilities in real time. It combines a regex-based Static Application Security Testing (SAST) scanner with Gemini LLM reasoning to validate security alerts, reduce false positives, and post actionable, line-specific code fixes directly to GitHub PR diffs.
