@@ -26,21 +26,16 @@
 - **Data Validation**: Pydantic v2
 - **Resilience**: Tenacity (Exponential Backoff)
 - **Integrations**: GitHub REST API & Webhooks, ngrok (Local Tunneling)
-
----
-
+- 
 ## System Architecture
-┌─────────────────┐       ┌─────────────────┐       ┌──────────────────┐
-│   GitHub PR     │ ───>  │  FastAPI Server │ ───>  │   SAST Scanner   │
-│ (Webhook Event) │       │   (/webhook)    │       │ (Regex Engine)   │
-└─────────────────┘       └─────────────────┘       └──────────────────┘
-│
-▼
-┌─────────────────┐       ┌─────────────────┐       ┌──────────────────┐
-│  GitHub Review  │  <─── │ Pydantic Validation     │  <─── │ Gemini LLM Engine│
-│ (Inline Comments)│       │ (Structured Output) │       │(gemini-3.8-flash)│
-└─────────────────┘       └─────────────────┘       └──────────────────┘
----
+
+```mermaid
+flowchart TD
+    A[GitHub PR <br> Webhook Event] -->|Triggers| B(FastAPI Server <br> /webhook)
+    B --> C{SAST Scanner <br> Regex Engine}
+    C -->|Static Findings & Diff| D[Gemini LLM Engine <br> gemini-3.8-flash]
+    D --> E{Pydantic Validation <br> Structured Output}
+    E -->|JSON Payload| F[GitHub Review <br> Inline Comments]
 
 ## Project Structure
 
